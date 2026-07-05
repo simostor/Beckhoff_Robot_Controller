@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_i_Watchdog" Id="{ff30f4da-010b-4329-9c28-4485a884cf92}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_i_Watchdog
+VAR_INPUT
+	lreal_MaxAllowedLatency : LREAL; // [s]
+	i_Signal : INT;
+	lreal_dt : LREAL;
+END_VAR
+VAR_OUTPUT
+	b_Timeout : BOOL;
+	lreal_AverageLatency : LREAL; // Implement
+END_VAR
+VAR
+	i_LastValue : INT;
+	lreal_CurrentLatency : LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF i_Signal <> i_LastValue THEN
+	b_Timeout := FALSE;
+	lreal_CurrentLatency := 0;
+ELSE
+	lreal_CurrentLatency := lreal_CurrentLatency + lreal_dt;
+	IF lreal_CurrentLatency >= lreal_MaxAllowedLatency THEN
+		b_Timeout := TRUE;
+	END_IF
+END_IF
+
+i_LastValue := i_Signal;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
