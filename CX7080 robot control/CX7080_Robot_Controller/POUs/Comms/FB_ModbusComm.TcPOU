@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_ModbusComm" Id="{7c71835f-e6ac-431f-8e08-9a327378b96b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ModbusComm
+VAR_INPUT
+	i_MBO_BaseAngle : INT;
+	i_MBO_ShoulderAngle : INT;
+	i_MBO_ElbowAngle : INT;
+	i_MBO_EndEffectorValue : INT;
+	b_MBO_EmergencyStop : INT;
+	lreal_CycleTime : LREAL;
+END_VAR
+VAR_OUTPUT
+	iLastWrittenBaseAngle : INT;
+	iLastWrittenShoulderAngle : INT;
+	iLastWrittenElbowAngle : INT;
+	b_MBI_LocalControl : BOOL;
+	b_MBI_LocalEmergencyStopActive : BOOL;
+	b_MBWatchdogTimeout : BOOL;
+	i_MBI_LocalBaseAngle : INT;
+	i_MBI_LocalShoulderAngle : INT;
+	i_MBI_LocalElbowAngle : INT;
+	i_MBI_LocalValueEndEffector : INT;
+END_VAR
+VAR
+	i_MBO_WatchdogKick : INT;
+	i_MBI_WatchdogBark : INT;
+	MB_Master: ModbusRtuMaster_PcCOM;
+	MB_ID: BYTE := 1;
+	Data_Read : ARRAY[0..9] OF INT;
+	Enable_Read: BOOL;
+	Busy_Read: BOOL;
+	Error_Read : BOOL;
+	ErrorId_Read: Tc2_ModbusRTU.MODBUS_ERRORS;
+	Register_Read_Address: WORD := 0;
+	Data_Write : ARRAY[0..9] OF INT;
+	Enable_Write: BOOL;
+	Busy_Write: BOOL;
+	Error_Write : BOOL;
+	ErrorId_Write: Tc2_ModbusRTU.MODBUS_ERRORS;
+	Register_Write_Address: WORD := 10;
+	state : BOOL;
+	Toggle_Auto : BOOL := TRUE;
+	timer: TON;              // Timer On Delay function block
+    clockSignal: BOOL := FALSE; // Output signal that toggles
+    period: TIME := T#25MS;  // Period of the clock signal (1/10Hz = 100ms, so T#50ms for half-cycle)
+	fb_i_Watchdog: FB_i_Watchdog;
+	fb_Toggle_ReadWrite : FB_Toggle_ReadWrite;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fb_Toggle_ReadWrite(
+	b_Enable_Write:= TRUE, 
+	b_BusyRead:= Busy_Read, 
+	b_BusyWrite:= Busy_Write, 
+	b_Read=> Enable_Read, 
+	b_Write=> Enable_Write);
+
+
+
+MB_Master.ReadRegs(
+    UnitID:= MB_ID, 
+    Quantity:= 10, 
+    MBAddr:= Register_Read_Address, 
+    cbLength:= SIZEOF(Data_Read), 
+    pMemoryAddr:= ADR(Data_Read), 
+    Execute:= Enable_Read, 
+    Timeout:= T#50MS, 
+    BUSY=> Busy_Read, 
+	
+    Error=> Error_Read, 
+    ErrorId=> ErrorId_Read, 
+    cbRead=>);
+
+	
+	
+i_MBI_LocalBaseAngle := Data_Read[0];
+i_MBI_LocalShoulderAngle := Data_Read[1];
+i_MBI_LocalBaseAngle := Data_Read[2];
+i_MBI_LocalValueEndEffector := Data_Read[3];
+b_MBI_LocalControl := INT_TO_BOOL(Data_Read[4]);
+b_MBI_LocalEmergencyStopActive := INT_TO_BOOL(Data_Read[5]);
+i_MBI_WatchdogBark := Data_Read[6];
+
+
+
+Data_Write[0] := i_MBO_BaseAngle;
+Data_Write[1] := i_MBO_ShoulderAngle;
+Data_Write[2] := i_MBO_ElbowAngle;
+Data_Write[3] := i_MBO_EndEffectorValue;
+Data_Write[4] := b_MBO_EmergencyStop;
+Data_Write[5] := i_MBO_WatchdogKick;
+
+
+MB_Master.WriteRegs(
+    UnitID:= MB_ID, 
+    Quantity:= 10, 
+    MBAddr:= Register_Write_Address, 
+    cbLength:= SIZEOF(Data_Write), 
+    pMemoryAddr:= ADR(Data_Write), 
+    Execute:= Enable_Write, 
+    Timeout:= T#50ms, 
+    BUSY=> Busy_Write, 
+    Error=> Error_Write, 
+    ErrorId=> ErrorId_Write, 
+    cbRead=>);
+
+
+
+// Watchdog logic
+i_MBO_WatchdogKick := i_MBO_WatchdogKick + 1;
+IF i_MBO_WatchdogKick >= 1000 THEN
+	i_MBO_WatchdogKick := 0;
+END_IF
+
+fb_i_Watchdog(
+	lreal_MaxAllowedLatency:= 0.5, 
+	i_Signal:= i_MBI_WatchdogBark, 
+	lreal_dt:= lreal_CycleTime, 
+	b_Timeout=> b_MBWatchdogTimeout, 
+	lreal_AverageLatency=> );
+
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

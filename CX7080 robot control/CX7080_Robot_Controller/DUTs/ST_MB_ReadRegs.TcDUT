@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <DUT Name="ST_MB_ReadRegs" Id="{ee3397d1-2360-4b44-84f6-8873fc2ec01e}">
+    <Declaration><![CDATA[TYPE ST_MB_ReadRegs :
+STRUCT
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

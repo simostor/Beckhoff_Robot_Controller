@@ -1,4 +1,33 @@
 <?xml version="1.0"?>
 <TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.62">
-	<Project ProjectGUID="{4CA5A825-FEA1-4E25-978C-55D46337A6E6}" ShowHideConfigurations="#x6"/>
+	<Project ProjectGUID="{4CA5A825-FEA1-4E25-978C-55D46337A6E6}" TargetNetId="5.140.122.236.1.1" ShowHideConfigurations="#x3c7">
+		<System>
+			<Tasks>
+				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
+					<Name>PlcTask</Name>
+				</Task>
+				<Task Id="4" Priority="21" CycleTime="100000" AmsPort="351" AdtTasks="true">
+					<Name>PlcTask1</Name>
+				</Task>
+				<Task Id="5" Priority="22" CycleTime="100000" AmsPort="352" AdtTasks="true">
+					<Name>PlcTask2</Name>
+				</Task>
+			</Tasks>
+		</System>
+		<Plc>
+			<Project File="CX7080_Robot_Controller.xti"/>
+		</Plc>
+		<Io>
+			<Device File="Device 3 (CX7000).xti" Id="3"/>
+			<Device File="Device 1 (EtherCAT).xti" Id="1"/>
+			<Device File="Device 7 (COM Port).xti" Id="7"/>
+		</Io>
+		<SymbolWatch>
+			<Variable>TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 3 (EL1008)^Channel 3^PB_Reset</Variable>
+		</SymbolWatch>
+	</Project>
+	<Mappings>
+		<MappingInfo Identifier="{00000000-2001-0850-0020-500810000403}" Id="#x02030010"/>
+		<MappingInfo Identifier="{00000000-2001-0850-0020-500860000403}" Id="#x02030020"/>
+	</Mappings>
 </TcSmProject>

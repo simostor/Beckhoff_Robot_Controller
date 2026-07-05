@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <Itf Name="I_JointJog" Id="{a2a0c1c3-184c-4008-ae51-276c8e9d793a}">
+    <Declaration><![CDATA[INTERFACE I_JointJog
+
+
+(*
+Hva er poenget med å bruke interface?
+Det gjør separation of concerns enklere.
+En funksjonsblokk trenger ikke å vite hvordan ting er implementert i (en annen funksjonsblokk?), men trenger
+bare å kjenne til interface.
+Dette gjør det enklere å drive med TDD (test driven development), da funksjonsblokker har mindre avhengigheter.
+
+
+*)]]></Declaration>
+    <Method Name="Ramp" Id="{f8d75f8f-80b8-438e-9b08-5486746c5106}">
+      <Declaration><![CDATA[METHOD Ramp : LREAL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

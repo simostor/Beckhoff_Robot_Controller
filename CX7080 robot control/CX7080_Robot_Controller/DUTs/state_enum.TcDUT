@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <DUT Name="state_enum" Id="{11288b5b-d77b-4db5-a6af-8dcd87585779}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE state_enum :
+(
+	startup_mode,
+	jog_joint_mode,
+	jog_cartesian_mode,
+	auto_mode,
+	emg_stop_mode,
+	comm_fault_mode,
+	manual_mode
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

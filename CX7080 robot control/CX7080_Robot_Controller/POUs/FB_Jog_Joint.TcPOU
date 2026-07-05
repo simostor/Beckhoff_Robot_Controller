@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_Jog_Joint" Id="{52a44315-b2e5-4aeb-9b6c-90503662b0b6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Jog_Joint
+VAR_INPUT
+	SW_Fast_Mode : BOOL; // True = fast mode, False = slow mode
+	SlowModeVelocitySetting : LREAL; // [deg/s]
+	FastModeVelovitySetting : LREAL; // [deg/s]
+	PB_Base_Pos : BOOL;
+	PB_Base_Neg : BOOL;
+	PB_Shoulder_Pos : BOOL;
+	PB_Shoulder_Neg : BOOL;
+	PB_Elbow_Pos : BOOL;
+	PB_Elbow_Neg : BOOL;
+	lr_deltaTime : LREAL;
+END_VAR
+VAR_OUTPUT
+	i_Set_Base : INT;
+	i_Set_Shoulder : INT;
+	i_Set_Elbow : INT;
+END_VAR
+VAR
+	lr_CurrentSpeedSetting : LREAL; // [deg/s]
+	lr_Set_Base : LREAL;
+	lr_Set_Shoulder : LREAL;
+	lr_Set_Elbow : LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF SW_Fast_Mode THEN
+	lr_CurrentSpeedSetting := FastModeVelovitySetting;
+ELSE
+	lr_CurrentSpeedSetting := SlowModeVelocitySetting;
+END_IF
+
+IF PB_Base_Pos AND NOT PB_Base_Neg THEN
+	lr_Set_Base := lr_Set_Base + (lr_CurrentSpeedSetting * lr_deltaTime);
+ELSIF NOT PB_Base_Pos AND PB_Base_Neg THEN
+		lr_Set_Base := lr_Set_Base - (lr_CurrentSpeedSetting * lr_deltaTime);
+END_IF
+
+
+i_Set_Base := LREAL_TO_INT(lr_Set_Base);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

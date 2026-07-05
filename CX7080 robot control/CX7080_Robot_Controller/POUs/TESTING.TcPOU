@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="TESTING" Id="{3b932f14-1bbb-4b5d-8908-270a039bae4c}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM TESTING
+VAR
+	Test_FB_Toggle_ReadWrite : FB_Toggle_ReadWrite;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Test_FB_Toggle_ReadWrite(
+	b_Enable_Write:= , 
+	b_BusyRead:= , 
+	b_BusyWrite:= , 
+	b_Read=> , 
+	b_Write=> );]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

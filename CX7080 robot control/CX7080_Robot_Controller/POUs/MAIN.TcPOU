@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="MAIN" Id="{5c661849-addd-4c08-be03-d943d6f2eed1}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	fb_Startup : FB_Startup;
+	fb_ModbusComm: FB_ModbusComm;
+	fb_System_Time : FB_System_Time;
+	fb_Jog_Joint : FB_Jog_Joint;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+GVL.LED_J1_CW := GVL.PB_J1_CW;
+GVL.LED_J2_CW := GVL.PB_J2_CW;
+GVL.LED_J3_CW := GVL.PB_J3_CW;
+GVL.LED_J1_CCW := GVL.PB_J1_CCW;
+GVL.LED_J2_CCW := GVL.PB_J2_CCW;
+GVL.LED_J3_CCW := GVL.PB_J3_CCW;
+GVL.LED_EE_Grip := GVL.PB_EE_Grip;
+GVL.LED_EE_Ungrip := GVL.PB_EE_Ungrip;
+GVL.LED_EMG_STOP := NOT GVL.PB_EMG_STOP;
+GVL.LED_Start_Pause := GVL.PB_Start_Pause;
+GVL.LED_Reset := GVL.LED_Reset;
+GVL.LED_Comm_Fault := TRUE;
+GVL.LED_Warning := TRUE;
+
+(*
+GJENSTÅENDE ARBEID:
+1) Map resten av knapper mot IO.
+2) Legg inn st
+*)
+
+*)
+
+// Code which must run every PLC cycle.
+fb_System_Time(); // Run FB to calculate Delta_Time
+
+IF NOT GVL.PB_EMG_STOP AND NOT (gvl.system_state = state_enum.startup_mode) THEN
+	GVL.system_state := state_enum.emg_stop_mode;
+ELSIF GVL.modbus_comm_fault AND NOT (gvl.system_state = state_enum.startup_mode)  THEN
+	GVL.system_state := state_enum.comm_fault_mode;
+END_IF
+
+
+CASE gvl.system_state OF
+state_enum.startup_mode:
+	fb_Startup();
+state_enum.jog_joint_mode:
+	fb_Jog_Joint(
+	SW_Fast_Mode:= GVL.SW_Slow_Fast, 
+	SlowModeVelocitySetting:= 50.0, 
+	FastModeVelovitySetting:= 180.0, 
+	PB_Base_Pos:= GVL.PB_J1_CCW, 
+	PB_Base_Neg:= GVL.PB_J1_CW, 
+	PB_Shoulder_Pos:= GVL.PB_J2_CCW, 
+	PB_Shoulder_Neg:= GVL.PB_J2_CCW, 
+	PB_Elbow_Pos:= GVL.PB_J3_CCW, 
+	PB_Elbow_Neg:= GVL.PB_J3_CCW, 
+	lr_deltaTime:= fb_System_Time.Delta_Time, 
+	i_Set_Base=> , 
+	i_Set_Shoulder=> , 
+	i_Set_Elbow=> );
+state_enum.jog_cartesian_mode:
+state_enum.manual_mode:
+state_enum.emg_stop_mode:
+state_enum.comm_fault_mode:
+state_enum.auto_mode:
+END_CASE
+
+//fb_ModbusComm();
+fb_ModbusComm(
+	i_MBO_BaseAngle:= fb_Jog_Joint.i_Set_Base, 
+	i_MBO_ShoulderAngle:= , 
+	i_MBO_ElbowAngle:= , 
+	i_MBO_EndEffectorValue:= , 
+	b_MBO_EmergencyStop:= , 
+	lreal_CycleTime := fb_System_Time.Delta_Time,
+	iLastWrittenBaseAngle=> , 
+	iLastWrittenShoulderAngle=> , 
+	iLastWrittenElbowAngle=> , 
+	b_MBI_LocalControl=> , 
+	b_MBI_LocalEmergencyStopActive=> , 
+	b_MBWatchdogTimeout=> GVL.LED_Comm_Fault, 
+	i_MBI_LocalBaseAngle=> , 
+	i_MBI_LocalShoulderAngle=> , 
+	i_MBI_LocalElbowAngle=> , 
+	i_MBI_LocalValueEndEffector=> );
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

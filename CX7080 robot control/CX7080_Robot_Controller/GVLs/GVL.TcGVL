@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <GVL Name="GVL" Id="{6855ee8d-008b-438b-bf55-2ed7d4bc7b96}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	// Internal system parameters
+	system_state : state_enum := state_enum.startup_mode; // Used to keep track of system state machine. Initialized in startup_mode.
+	modbus_comm_fault : BOOL := FALSE;
+	J1_Home_Pos : INT := 135; // Degrees
+	J2_Home_Pos : INT := 135; // Degrees
+	J3_Home_Pos : INT := 135; // Degrees
+	LowSpeedSetting : REAL := 5; // [deg/s]
+	HighSpeedSetting : REAL := 20; // [deg/s]
+	
+	BaseAngleMin : INT := 0;
+	BaseAngleMax : INT := 180;
+	ShoulderAngleMin : INT := 20;
+	ShoulderAngleMax : INT := 120;
+	ElbowAngleMin : INT := 0;
+	ElbowAngleMax : INT := 180;
+	
+	// Inputs
+	input1 AT %I* : BOOL;
+	output1 AT %Q* : BOOL;
+	PB_J1_CW AT %I* : BOOL;
+	PB_J1_CCW AT %I*: BOOL;
+	PB_J2_CW AT %I* : BOOL;
+	PB_J2_CCW AT %I* : BOOL;
+	PB_J3_CW AT %I* : BOOL;
+	PB_J3_CCW AT %I* : BOOL;
+	PB_EE_Grip AT %I* : BOOL;
+	PB_EE_Ungrip AT %I* : BOOL;
+	PB_EMG_STOP AT %I* : BOOL;
+	PB_Reset AT %I* : BOOL;
+	PB_Record_Pos AT %I* : BOOL;
+	PB_Record_Delay AT %I* : BOOL;
+	PB_Start_Pause AT %I* : BOOL;
+	SW_Slow_Fast AT %I* : BOOL;
+	SW_Join_Cart AT %I* : BOOL;
+	
+	// Outputs
+	LED_J1_CW AT %Q* : BOOL;
+	LED_J1_CCW AT %Q*: BOOL;
+	LED_J2_CW AT %Q* : BOOL;
+	LED_J2_CCW AT %Q* : BOOL;
+	LED_J3_CW AT %Q* : BOOL;
+	LED_J3_CCW AT %Q* : BOOL;
+	LED_EE_Grip AT %Q* : BOOL;
+	LED_EE_Ungrip AT %Q* : BOOL;
+	LED_EMG_STOP AT %Q* : BOOL;
+	LED_Reset AT %Q* : BOOL;
+	LED_Record_Pos AT %Q* : BOOL;
+	LED_Record_Delay AT %Q* : BOOL;
+	LED_Start_Pause AT %Q* : BOOL;
+	LED_Comm_Fault AT %Q* : BOOL;
+	LED_Warning AT %Q* : BOOL;
+	
+	// Modbus registers
+	MB_Write_J1 : INT;
+	MB_Write_J2 : INT;
+	MB_Write_J3 : INT;
+	MB_Write_Gripper : INT;
+	MB_Write_Watchdog : INT;
+	MB_Write_Blank1 : INT;
+	MB_Write_Blank2 : INT;
+	MB_Write_Blank3 : INT;
+	MB_Write_Blank4 : INT;
+	MB_Write_Blank5 : INT;
+	MB_Read_Watchdog : INT;
+	MB_Read_Blank2 : INT;
+	MB_Read_Blank3 : INT;
+	MB_Read_Blank4 : INT;
+	MB_Read_Blank5 : INT;
+	MB_Read_Blank6 : INT;
+	MB_Read_Blank7 : INT;
+	MB_Read_Blank8 : INT;
+	MB_Read_Blank9 : INT;
+	MB_Read_Blank10 : INT;
+	
+	
+	//DI : ST_HW_DI;
+	//DO : ST_HW_DO;
+	
+	
+	
+END_VAR
+	]]></Declaration>
+  </GVL>
+</TcPlcObject>

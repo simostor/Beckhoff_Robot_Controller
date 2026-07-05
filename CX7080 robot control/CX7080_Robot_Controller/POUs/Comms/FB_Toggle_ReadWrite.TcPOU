@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_Toggle_ReadWrite" Id="{e7e1070d-ec36-4fe3-916a-391f43935283}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Toggle_ReadWrite
+VAR_INPUT
+	b_Enable_Write : BOOL;
+	b_BusyRead : BOOL;
+	b_BusyWrite : BOOL;
+END_VAR
+VAR_OUTPUT
+	b_Read : BOOL;
+	b_Write : BOOL;
+END_VAR
+VAR
+	i_step : INT := 1; // Initially set to step 1
+	F_TRIG_BusyRead : F_TRIG;
+	F_TRIG_BusyWrite : F_TRIG;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[F_TRIG_BusyRead(CLK:= b_BusyRead, Q=> );
+F_TRIG_BusyWrite(CLK:= b_BusyWrite, Q=> );
+
+CASE i_step OF
+    1:
+        b_Read := TRUE;
+        b_Write := FALSE;
+        i_step := 2;
+    2:
+        IF b_BusyRead THEN
+            i_step := 3;
+        END_IF
+    3:
+        b_Read := FALSE;
+        i_step := 4;
+    4:
+        IF F_TRIG_BusyRead.Q THEN
+            i_step := 5;
+        END_IF
+    5:
+        IF b_Enable_Write THEN
+            i_step := 7;
+        ELSE
+            i_step := 6;
+        END_IF
+    6:
+        b_Read := TRUE;
+        i_step := 2;
+    7:
+        b_Write := TRUE;
+        b_Read := FALSE;
+        i_step := 8;
+    8:
+        IF b_BusyWrite THEN
+            i_step := 9;
+        END_IF
+    9:
+        b_Write := FALSE;
+        i_step := 10;
+    10:
+        IF F_TRIG_BusyWrite.Q THEN
+            i_step := 1;
+        END_IF
+ELSE
+    i_step := 1;
+END_CASE]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

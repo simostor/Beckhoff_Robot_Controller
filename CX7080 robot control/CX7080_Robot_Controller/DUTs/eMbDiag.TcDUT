@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <DUT Name="eMbDiag" Id="{2da8b63e-ef93-416c-96bd-3aaf82ac1577}">
+    <Declaration><![CDATA[TYPE eMbDiag :
+(
+    eMbDiag_Ok := 0,
+    eMbDiag_Timeout := 1,
+    eMbDiag_InvalidBusy := 2
+);
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

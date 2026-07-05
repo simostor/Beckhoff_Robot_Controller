@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.62" ClassName="CDevBeckhoffCx7000Def" SubType="161">
+	<Device Id="3" DevType="161" AmsNetId="5.140.122.236.4.1">
+		<Name>__FILENAME__</Name>
+		<DevData>3412000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</DevData>
+		<Image Id="4" AddrType="1" ImageType="3" SizeIn="6" SizeOut="20">
+			<Name>Image</Name>
+		</Image>
+		<Box File="Term 1 (CX7028).xti" Id="6">
+			<EtherCAT/>
+		</Box>
+	</Device>
+</TcSmItem>

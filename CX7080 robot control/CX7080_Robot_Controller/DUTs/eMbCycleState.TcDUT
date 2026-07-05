@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <DUT Name="eMbCycleState" Id="{ca6d863a-a1cb-4128-a8c2-f50894e8cd56}">
+    <Declaration><![CDATA[{attribute 'namespace' := 'MyLib.Modbus'}
+TYPE eMbCycleState :
+(
+    eMbState_Init,
+    eMbState_Read,
+    eMbState_Write,
+    eMbState_Error
+);
+END_TYPE
+
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
