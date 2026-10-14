@@ -22,7 +22,7 @@
 				</Entry>
 			</Pdo>
 			<Pdo Name="Channel 4" Index="#x1a03" Flags="#x0011" SyncMan="0">
-				<Entry Name="Input" Index="#x6030" Sub="#x01">
+				<Entry Name="SW_SLOW_FAST" Index="#x6030" Sub="#x01">
 					<Type>BIT</Type>
 				</Entry>
 			</Pdo>
@@ -37,12 +37,12 @@
 				</Entry>
 			</Pdo>
 			<Pdo Name="Channel 7" Index="#x1a06" Flags="#x0011" SyncMan="0">
-				<Entry Name="Input" Index="#x6060" Sub="#x01">
+				<Entry Name="PB_START_PAUSE" Index="#x6060" Sub="#x01">
 					<Type>BIT</Type>
 				</Entry>
 			</Pdo>
 			<Pdo Name="Channel 8" Index="#x1a07" Flags="#x0011" SyncMan="0">
-				<Entry Name="Input" Index="#x6070" Sub="#x01">
+				<Entry Name="SW_JOINT_CART" Index="#x6070" Sub="#x01">
 					<Type>BIT</Type>
 				</Entry>
 			</Pdo>

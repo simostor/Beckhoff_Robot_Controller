@@ -10,7 +10,14 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[(*
+      <ST><![CDATA[
+(*
+GJENSTÅENDE ARBEID:
+1) Test jog robot (simuler først ved å deaktivere comm fault state som gjør det umulig å simulere robot kommandoer)
+2) 
+*)
+
+
 GVL.LED_J1_CW := GVL.PB_J1_CW;
 GVL.LED_J2_CW := GVL.PB_J2_CW;
 GVL.LED_J3_CW := GVL.PB_J3_CW;
@@ -22,16 +29,11 @@ GVL.LED_EE_Ungrip := GVL.PB_EE_Ungrip;
 GVL.LED_EMG_STOP := NOT GVL.PB_EMG_STOP;
 GVL.LED_Start_Pause := GVL.PB_Start_Pause;
 GVL.LED_Reset := GVL.LED_Reset;
-GVL.LED_Comm_Fault := TRUE;
 GVL.LED_Warning := TRUE;
+GVL.LED_Reset := GVL.PB_Reset;
+GVL.LED_Start_Pause := GVL.PB_Start_Pause;
+GVL.LED_Record_Pos := GVL.PB_Record_Pos;
 
-(*
-GJENSTÅENDE ARBEID:
-1) Map resten av knapper mot IO.
-2) Legg inn st
-*)
-
-*)
 
 // Code which must run every PLC cycle.
 fb_System_Time(); // Run FB to calculate Delta_Time

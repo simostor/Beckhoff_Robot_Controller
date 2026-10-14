@@ -376,7 +376,7 @@
 				<Link VarA="PlcTask Inputs^GVL.PB_EMG_STOP" VarB="Channel 1^PB_EMG_STOP" Size="1"/>
 				<Link VarA="PlcTask Inputs^GVL.PB_Record_Pos" VarB="Channel 3^PB_RECORD_POS" Size="1"/>
 				<Link VarA="PlcTask Inputs^GVL.PB_Reset" VarB="Channel 2^PB_RESET" Size="1"/>
-				<Link VarA="PlcTask Inputs^GVL.PB_Start_Pause" VarB="Channel 7^PB_START_PAUSE" Size="1"/>
+				<Link VarA="PlcTask Inputs^GVL.PB_Start_Pause" VarB="Channel 5^PB_START_PAUSE" Size="1"/>
 				<Link VarA="PlcTask Inputs^GVL.SW_Jog_Auto" VarB="Channel 6^SW_JOG_AUTO" Size="1"/>
 				<Link VarA="PlcTask Inputs^GVL.SW_Join_Cart" VarB="Channel 8^SW_JOINT_CART" Size="1"/>
 				<Link VarA="PlcTask Inputs^GVL.SW_Slow_Fast" VarB="Channel 4^SW_SLOW_FAST" Size="1"/>
@@ -394,9 +394,9 @@
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 5 (EL2008)">
 				<Link VarA="PlcTask Outputs^GVL.LED_Comm_Fault" VarB="Channel 6^Output" Size="1"/>
 				<Link VarA="PlcTask Outputs^GVL.LED_EMG_STOP" VarB="Channel 1^Output" Size="1"/>
-				<Link VarA="PlcTask Outputs^GVL.LED_Record_Delay" VarB="Channel 5^Output" Size="1"/>
 				<Link VarA="PlcTask Outputs^GVL.LED_Record_Pos" VarB="Channel 3^Output" Size="1"/>
 				<Link VarA="PlcTask Outputs^GVL.LED_Reset" VarB="Channel 2^Output" Size="1"/>
+				<Link VarA="PlcTask Outputs^GVL.LED_Start_Pause" VarB="Channel 5^Output" Size="1"/>
 				<Link VarA="PlcTask Outputs^GVL.LED_Warning" VarB="Channel 7^Output" Size="1"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 7 (COM Port)">
