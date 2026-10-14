@@ -38,7 +38,7 @@ fb_System_Time(); // Run FB to calculate Delta_Time
 
 IF NOT GVL.PB_EMG_STOP AND NOT (gvl.system_state = state_enum.startup_mode) THEN
 	GVL.system_state := state_enum.emg_stop_mode;
-ELSIF GVL.modbus_comm_fault AND NOT (gvl.system_state = state_enum.startup_mode)  THEN
+ELSIF GVL.LED_Comm_Fault AND NOT (gvl.system_state = state_enum.startup_mode)  THEN
 	GVL.system_state := state_enum.comm_fault_mode;
 END_IF
 
