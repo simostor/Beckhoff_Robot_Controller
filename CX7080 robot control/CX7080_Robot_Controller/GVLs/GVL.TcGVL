@@ -37,6 +37,7 @@ VAR_GLOBAL
 	PB_Start_Pause AT %I* : BOOL;
 	SW_Slow_Fast AT %I* : BOOL;
 	SW_Join_Cart AT %I* : BOOL;
+	SW_Jog_Auto AT %I* : BOOL;
 	
 	// Outputs
 	LED_J1_CW AT %Q* : BOOL;

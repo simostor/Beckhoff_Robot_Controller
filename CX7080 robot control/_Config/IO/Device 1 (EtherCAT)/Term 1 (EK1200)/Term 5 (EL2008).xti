@@ -25,7 +25,7 @@
 				</Entry>
 			</Pdo>
 			<Pdo Name="Channel 4" Index="#x1603" InOut="1" Flags="#x0011" SyncMan="0">
-				<Entry Name="Output" Index="#x7030" Sub="#x01">
+				<Entry Name="Spare" Index="#x7030" Sub="#x01">
 					<Type>BIT</Type>
 				</Entry>
 			</Pdo>
