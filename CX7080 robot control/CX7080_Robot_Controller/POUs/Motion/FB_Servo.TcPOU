@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_Servo" Id="{512d584c-7e24-47a3-a6ac-07479c6ca195}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Servo
+VAR_INPUT
+	b_EnableServo : BOOL;
+	b_CW : BOOL;
+	b_CCW : BOOL;
+	lr_deltaTime : LREAL;
+	lr_DegLowLim : INT;
+	lr_DegHighLim : INT;
+	lr_SlowModeVelocitySetting : LREAL; // [deg/s]
+	lr_FastModeVelovitySetting : LREAL; // [deg/s]
+	SW_Fast_Mode : BOOL; // True = fast mode, False = slow mode
+END_VAR
+VAR_OUTPUT
+	i_Set_Angle : INT;
+END_VAR
+VAR
+	lr_CurrentSpeedSetting : LREAL; // [deg/s]
+	lr_Set_Angle : LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF SW_Fast_Mode THEN
+	lr_CurrentSpeedSetting := lr_FastModeVelovitySetting;
+ELSE
+	lr_CurrentSpeedSetting := lr_SlowModeVelocitySetting;
+END_IF
+
+
+IF b_EnableServo THEN
+	IF b_CW AND NOT b_CCW THEN
+		lr_Set_Angle := lr_Set_Angle + (lr_CurrentSpeedSetting * lr_deltaTime);
+	ELSIF NOT b_CW AND b_CCW THEN
+			lr_Set_Angle := lr_Set_Angle - (lr_CurrentSpeedSetting * lr_deltaTime);
+	END_IF
+	IF	lr_Set_Angle > lr_DegHighLim THEN
+		lr_Set_Angle := lr_DegHighLim;
+	ELSIF lr_Set_Angle < lr_DegLowLim THEN
+		lr_Set_Angle := lr_DegLowLim;
+	END_IF
+	i_Set_Angle := LREAL_TO_INT(lr_Set_Angle);
+END_IF;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

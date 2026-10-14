@@ -77,12 +77,6 @@ VAR_GLOBAL
 	MB_Read_Blank9 : INT;
 	MB_Read_Blank10 : INT;
 	
-	
-	//DI : ST_HW_DI;
-	//DO : ST_HW_DO;
-	
-	
-	
 END_VAR
 	]]></Declaration>
   </GVL>

@@ -53,7 +53,7 @@
 		</DataType>
 	</DataTypes>
 	<Project GUID="{926BF85D-7ECE-4719-B581-41DBAB4E5B1F}" Name="CX7080_Robot_Controller" PrjFilePath="..\..\CX7080_Robot_Controller\CX7080_Robot_Controller.plcproj" TmcFilePath="..\..\CX7080_Robot_Controller\CX7080_Robot_Controller.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="CX7080_Robot_Controller\CX7080_Robot_Controller.tmc" TmcHash="{B05A5510-36BA-B7F9-879E-551804FB0682}">
+		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="CX7080_Robot_Controller\CX7080_Robot_Controller.tmc" TmcHash="{2A8FC106-9A4D-12E5-039A-E79F0DA5891C}">
 			<Name>CX7080_Robot_Controller Instance</Name>
 			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 			<Vars VarGrpType="1">

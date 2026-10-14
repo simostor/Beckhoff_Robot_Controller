@@ -61,13 +61,16 @@
     <Compile Include="POUs\FB_Startup.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_System_Time.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\I_JointJog.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Misc\FB_System_Time.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Motion\FB_Servo.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\TESTING.TcPOU">
@@ -78,8 +81,9 @@
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
     <Folder Include="POUs\Comms" />
-    <Folder Include="VISUs" />
+    <Folder Include="POUs\Misc" />
     <Folder Include="POUs" />
+    <Folder Include="POUs\Motion" />
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="Tc2_ModbusRTU">

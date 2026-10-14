@@ -12,9 +12,6 @@ VAR
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[// FB must be called every PLC cycle, prefferably in the main() function.
-// FB is used to calculate dt (change in time) from the last PLC cycle
-// NOT COMPILED OR TESTED ON TARGET PLC.
-
 
 now := Tc2_System.F_GetSystemTime();
 

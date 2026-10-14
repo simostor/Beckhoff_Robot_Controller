@@ -3,16 +3,32 @@
   <POU Name="FB_Jog_Joint" Id="{52a44315-b2e5-4aeb-9b6c-90503662b0b6}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Jog_Joint
 VAR_INPUT
+	// Misc:
+	lr_DeltaTime : LREAL;
+	
+	// Config parameters
+	lr_SlowModeVelocitySetting : LREAL; // [deg/s]
+	lr_FastModeVelovitySetting : LREAL; // [deg/s]
+	i_Base_LowLimit : INT;
+	i_Base_HighLimit : INT;
+	i_Shoulder_LowLimit : INT;
+	i_Shoulder_HighLimit : INT;
+	i_Elbow_LowLimit : INT;
+	i_Elbow_HighLimit : INT;
+	
+	
+	
+	// Control inputs
+	b_Enable_Servos : BOOL;
 	SW_Fast_Mode : BOOL; // True = fast mode, False = slow mode
-	SlowModeVelocitySetting : LREAL; // [deg/s]
-	FastModeVelovitySetting : LREAL; // [deg/s]
 	PB_Base_Pos : BOOL;
 	PB_Base_Neg : BOOL;
 	PB_Shoulder_Pos : BOOL;
 	PB_Shoulder_Neg : BOOL;
 	PB_Elbow_Pos : BOOL;
 	PB_Elbow_Neg : BOOL;
-	lr_deltaTime : LREAL;
+
+
 END_VAR
 VAR_OUTPUT
 	i_Set_Base : INT;
@@ -24,23 +40,49 @@ VAR
 	lr_Set_Base : LREAL;
 	lr_Set_Shoulder : LREAL;
 	lr_Set_Elbow : LREAL;
+	
+		// Structures:
+	fb_Servo_Base : FB_Servo;
+	fb_Servo_Shoulder : FB_Servo;
+	fb_Servo_Elbow : FB_Servo;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF SW_Fast_Mode THEN
-	lr_CurrentSpeedSetting := FastModeVelovitySetting;
-ELSE
-	lr_CurrentSpeedSetting := SlowModeVelocitySetting;
-END_IF
+      <ST><![CDATA[fb_Servo_Base(
+	b_EnableServo:= b_Enable_Servos, 
+	b_CW:= PB_Base_Neg, 
+	b_CCW:= PB_Base_Pos, 
+	lr_deltaTime:= lr_DeltaTime, 
+	lr_DegLowLim:= i_Base_LowLimit, 
+	lr_DegHighLim:= i_Base_HighLimit, 
+	lr_SlowModeVelocitySetting:= lr_SlowModeVelocitySetting, 
+	lr_FastModeVelovitySetting:= lr_FastModeVelovitySetting, 
+	SW_Fast_Mode:= SW_Fast_Mode, 
+	i_Set_Angle=> i_Set_Base);
 
-IF PB_Base_Pos AND NOT PB_Base_Neg THEN
-	lr_Set_Base := lr_Set_Base + (lr_CurrentSpeedSetting * lr_deltaTime);
-ELSIF NOT PB_Base_Pos AND PB_Base_Neg THEN
-		lr_Set_Base := lr_Set_Base - (lr_CurrentSpeedSetting * lr_deltaTime);
-END_IF
+fb_Servo_Elbow(
+	b_EnableServo:= b_Enable_Servos, 
+	b_CW:= PB_Shoulder_Pos, 
+	b_CCW:= PB_Shoulder_Neg, 
+	lr_deltaTime:= lr_DeltaTime, 
+	lr_DegLowLim:= i_Shoulder_LowLimit, 
+	lr_DegHighLim:= i_Shoulder_HighLimit, 
+	lr_SlowModeVelocitySetting:= lr_SlowModeVelocitySetting, 
+	lr_FastModeVelovitySetting:= lr_FastModeVelovitySetting, 
+	SW_Fast_Mode:= SW_Fast_Mode, 
+	i_Set_Angle=> i_Set_Shoulder);
 
-
-i_Set_Base := LREAL_TO_INT(lr_Set_Base);]]></ST>
+fb_Servo_Shoulder(
+	b_EnableServo:= b_Enable_Servos, 
+	b_CW:= PB_Elbow_Pos, 
+	b_CCW:= PB_Elbow_Neg, 
+	lr_deltaTime:= lr_DeltaTime, 
+	lr_DegLowLim:= i_Elbow_LowLimit, 
+	lr_DegHighLim:= i_Elbow_HighLimit, 
+	lr_SlowModeVelocitySetting:= lr_SlowModeVelocitySetting, 
+	lr_FastModeVelovitySetting:= lr_FastModeVelovitySetting, 
+	SW_Fast_Mode:= SW_Fast_Mode, 
+	i_Set_Angle=> i_Set_Elbow);]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

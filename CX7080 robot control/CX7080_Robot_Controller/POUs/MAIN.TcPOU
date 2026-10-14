@@ -48,19 +48,26 @@ state_enum.startup_mode:
 	fb_Startup();
 state_enum.jog_joint_mode:
 	fb_Jog_Joint(
+	lr_DeltaTime:= fb_ModbusComm.lreal_CycleTime, 
+	lr_SlowModeVelocitySetting:= 1, 
+	lr_FastModeVelovitySetting:= 10, 
+	i_Base_LowLimit:= 0, 
+	i_Base_HighLimit:= 180, 
+	i_Shoulder_LowLimit:= 0, 
+	i_Shoulder_HighLimit:= 180, 
+	i_Elbow_LowLimit:= 0, 
+	i_Elbow_HighLimit:= 180, 
+	b_Enable_Servos:= TRUE, 
 	SW_Fast_Mode:= GVL.SW_Slow_Fast, 
-	SlowModeVelocitySetting:= 50.0, 
-	FastModeVelovitySetting:= 180.0, 
 	PB_Base_Pos:= GVL.PB_J1_CCW, 
 	PB_Base_Neg:= GVL.PB_J1_CW, 
 	PB_Shoulder_Pos:= GVL.PB_J2_CCW, 
-	PB_Shoulder_Neg:= GVL.PB_J2_CCW, 
+	PB_Shoulder_Neg:= GVL.PB_J2_CW, 
 	PB_Elbow_Pos:= GVL.PB_J3_CCW, 
-	PB_Elbow_Neg:= GVL.PB_J3_CCW, 
-	lr_deltaTime:= fb_System_Time.Delta_Time, 
-	i_Set_Base=> , 
-	i_Set_Shoulder=> , 
-	i_Set_Elbow=> );
+	PB_Elbow_Neg:= GVL.PB_J3_CW, 
+	i_Set_Base=>, 
+	i_Set_Shoulder=>, 
+	i_Set_Elbow=>);
 state_enum.jog_cartesian_mode:
 state_enum.manual_mode:
 state_enum.emg_stop_mode:
@@ -71,8 +78,8 @@ END_CASE
 //fb_ModbusComm();
 fb_ModbusComm(
 	i_MBO_BaseAngle:= fb_Jog_Joint.i_Set_Base, 
-	i_MBO_ShoulderAngle:= , 
-	i_MBO_ElbowAngle:= , 
+	i_MBO_ShoulderAngle:= fb_Jog_Joint.i_Set_Shoulder, 
+	i_MBO_ElbowAngle:= fb_Jog_Joint.i_Set_Elbow, 
 	i_MBO_EndEffectorValue:= , 
 	b_MBO_EmergencyStop:= , 
 	lreal_CycleTime := fb_System_Time.Delta_Time,
