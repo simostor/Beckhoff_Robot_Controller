@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_AutoSequence" Id="{99c3fd62-0234-4b24-a552-9bd68fd87dd7}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_AutoSequence
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+TODO
+-Et punkt lagres ved å trykke på PB_RECORD_POS
+-For å starte/pause en sekvens må PB_START_PAUSE trykkes inn
+-Minst ett punkt må være lagret for å kunne starte en sekvens
+-Hastighet kan enten være sakte eller rask, basert på bolsk verdi (false = slow, true = fast)
+-For å slette lagrede mellombunkter, press og hold reset i tre sekunder
+-Når sekvens er resatt, skal alle knapper blinke en gang
+
+
+
+
+
+*)]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

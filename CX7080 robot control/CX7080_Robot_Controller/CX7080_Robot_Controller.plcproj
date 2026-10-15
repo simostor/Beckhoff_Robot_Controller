@@ -55,9 +55,6 @@
     <Compile Include="POUs\Comms\FB_Toggle_ReadWrite.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_Jog_Joint.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\FB_Startup.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -68,6 +65,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Misc\FB_System_Time.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Motion\FB_AutoSequence.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Motion\FB_Jog_Joint.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Motion\FB_Servo.TcPOU">

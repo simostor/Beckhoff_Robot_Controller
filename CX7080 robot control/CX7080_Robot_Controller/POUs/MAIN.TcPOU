@@ -14,7 +14,7 @@ END_VAR
       <ST><![CDATA[
 (*
 GJENSTÅENDE ARBEID:
-1) Test jog robot (simuler først ved å deaktivere comm fault state som gjør det umulig å simulere robot kommandoer)
+1) Implementer auto sekvens FB
 2) 
 *)
 
