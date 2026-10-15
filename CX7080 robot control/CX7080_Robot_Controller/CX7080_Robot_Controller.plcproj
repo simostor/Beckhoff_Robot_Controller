@@ -76,6 +76,9 @@
     <Compile Include="POUs\TESTING.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Utilities\FB_ElectromagnetActivate.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
@@ -84,6 +87,7 @@
     <Folder Include="POUs\Misc" />
     <Folder Include="POUs" />
     <Folder Include="POUs\Motion" />
+    <Folder Include="POUs\Utilities" />
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="Tc2_ModbusRTU">

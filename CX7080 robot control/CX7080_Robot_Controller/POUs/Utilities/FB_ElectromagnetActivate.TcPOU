@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_ElectromagnetActivate" Id="{aee5bdc1-5c15-4e85-8d50-fb8accaaf3ef}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ElectromagnetActivate
+VAR_INPUT
+	b_activate : BOOL;
+	b_deactivate : BOOL;
+END_VAR
+VAR_OUTPUT
+	b_CMD_Magnet : BOOL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+Spec:
+Operator must hold activation button for a set amount of time before it changes from demagnectized to magnetized
+Operator mudt hold deactivation button for a set amoint of time before it changes state from magnetized to demagnetized
+If both magnetize button and demagnetize buttins are pressed simultanousely, nothing happens
+
+
+
+TODO:
+Implement debounce for buttons
+Implement override release function to release magnetization on demand (for emergency situations)
+*)
+
+IF b_activate AND b_deactivate THEN
+	// Do nothing - Operator should not push two buttons at the same time
+ELSIF b_activate THEN
+	b_CMD_Magnet := TRUE;
+ELSIF b_deactivate THEN
+	b_CMD_Magnet := FALSE;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

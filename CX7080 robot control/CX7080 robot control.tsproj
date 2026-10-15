@@ -22,9 +22,6 @@
 			<Device File="Device 1 (EtherCAT).xti" Id="1"/>
 			<Device File="Device 7 (COM Port).xti" Id="7"/>
 		</Io>
-		<SymbolWatch>
-			<Variable>TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 3 (EL1008)^Channel 3^PB_Reset</Variable>
-		</SymbolWatch>
 	</Project>
 	<Mappings>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500810000403}" Id="#x02030010"/>
