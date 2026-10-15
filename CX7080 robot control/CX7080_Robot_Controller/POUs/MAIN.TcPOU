@@ -7,6 +7,7 @@ VAR
 	fb_ModbusComm: FB_ModbusComm;
 	fb_System_Time : FB_System_Time;
 	fb_Jog_Joint : FB_Jog_Joint;
+	fb_ElectromagnetActivate : FB_ElectromagnetActivate;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -38,11 +39,14 @@ GVL.LED_Record_Pos := GVL.PB_Record_Pos;
 // Code which must run every PLC cycle.
 fb_System_Time(); // Run FB to calculate Delta_Time
 
+
+(* COMMENTING OUT FOR TESTING PURPOSES
 IF NOT GVL.PB_EMG_STOP AND NOT (gvl.system_state = state_enum.startup_mode) THEN
 	GVL.system_state := state_enum.emg_stop_mode;
 ELSIF GVL.LED_Comm_Fault AND NOT (gvl.system_state = state_enum.startup_mode)  THEN
 	GVL.system_state := state_enum.comm_fault_mode;
 END_IF
+*)
 
 
 CASE gvl.system_state OF
@@ -70,6 +74,12 @@ state_enum.jog_joint_mode:
 	i_Set_Base=>, 
 	i_Set_Shoulder=>, 
 	i_Set_Elbow=>);
+	
+	fb_ElectromagnetActivate(
+	b_activate := GVL.PB_EE_Grip,
+	b_deactivate := GVL.PB_EE_Ungrip,
+	b_CMD_Magnet =>);
+	
 state_enum.jog_cartesian_mode:
 state_enum.manual_mode:
 state_enum.emg_stop_mode:
@@ -82,7 +92,7 @@ fb_ModbusComm(
 	i_MBO_BaseAngle:= fb_Jog_Joint.i_Set_Base, 
 	i_MBO_ShoulderAngle:= fb_Jog_Joint.i_Set_Shoulder, 
 	i_MBO_ElbowAngle:= fb_Jog_Joint.i_Set_Elbow, 
-	i_MBO_EndEffectorValue:= , 
+	i_MBO_EndEffectorValue:= BOOL_TO_INT(fb_ElectromagnetActivate.b_CMD_Magnet), 
 	b_MBO_EmergencyStop:= , 
 	lreal_CycleTime := fb_System_Time.Delta_Time,
 	iLastWrittenBaseAngle=> , 
